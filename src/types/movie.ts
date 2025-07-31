@@ -8,6 +8,3 @@ export interface Movie {
     vote_average: number;
 }
 
-export interface MovieHttpResponse{
-    results: Movie[];
-}
