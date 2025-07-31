@@ -42,21 +42,28 @@ export default function App() {
     getMovies();
   }, [query]);
 
-  const handleMovieClick = (movie: Movie) => {
-    setSelectedMovie(movie);
+  const handleSearch = (formData: FormData) => {
+    const query = (formData.get("query") as string).trim();
+    if (!query) {
+      toast.error("Please enter your search query.");
+      return;
+    }
+
+    setMovies([]); 
+    setQuery(query);
   };
 
   return (
     <div className={css.app}>
       <Toaster />
-      <SearchBar onSubmit={setQuery} />
+      <SearchBar action={handleSearch} />
 
       {loading && <Loader />}
 
       {error && <ErrorMessage message={error} />}
 
       {!loading && !error && movies.length > 0 && (
-        <MovieGrid movies={movies} onSelect={handleMovieClick} />
+        <MovieGrid movies={movies} onSelect={setSelectedMovie} />
       )}
 
       {selectedMovie && (
