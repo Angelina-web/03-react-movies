@@ -42,21 +42,15 @@ export default function App() {
     getMovies();
   }, [query]);
 
-  const handleSearch = (formData: FormData) => {
-    const query = (formData.get("query") as string).trim();
-    if (!query) {
-      toast.error("Please enter your search query.");
-      return;
-    }
-
+   const handleSearch = (query: string) => {
     setMovies([]); 
-    setQuery(query);
+    setQuery(query); 
   };
 
   return (
     <div className={css.app}>
       <Toaster />
-      <SearchBar action={handleSearch} />
+      <SearchBar onSubmit={handleSearch} />
 
       {loading && <Loader />}
 
